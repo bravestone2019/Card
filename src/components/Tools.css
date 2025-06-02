@@ -1,0 +1,31 @@
+.container {
+  position: fixed; 
+  bottom: 30px;  
+  left: 50%;
+  transform: translateX(-60%); 
+  background-color: white;
+  border: 2px solid black; /* width | style | color  */
+  border-radius: 18px;
+  box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.3); /*  X-axis | Y-axis | blur | color  */
+  display: flex;
+  padding: 10px 15px; /*  X-axis | Y-axis  */
+  gap: 15px;
+  z-index: 1000; 
+}
+
+.hidden {
+  position: fixed; 
+  bottom: 18px;  
+  left: 90%;
+  transform: translateX(-60%); 
+  background-color: white;
+  border: 2px solid black; /* width | style | color  */
+  border-radius: 18px;
+  box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.3); /*  X-axis | Y-axis | blur | color  */
+  display: flex;
+  padding: 10px 15px; /*  X-axis | Y-axis  */
+  gap: 15px;
+  z-index: 1000; 
+}
+
+
