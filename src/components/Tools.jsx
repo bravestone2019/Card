@@ -1,5 +1,6 @@
 import './Tools.css' 
 import Upload from './Upload'
+import Preview from './Preview'
 
 const Tools = () => {
     
@@ -7,6 +8,7 @@ const Tools = () => {
         <>
         <div className="container">
             <Upload />
+            <Preview />
         </div>  
         </>
     );
