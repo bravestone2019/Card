@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       < Canvas backImage={ backImage } titleImage={ titleImage } signImage={ signImage } />
-       <Preview backImage={ backImage } titleImage={ titleImage } signImage={ signImage }/>
+       {/* <Preview backImage={ backImage } titleImage={ titleImage } signImage={ signImage }/> */}
       < Tool setBackImage={ setBackImage } setTitleImage={ setTitleImage } setSignImage={ setSignImage } />
     </>
   );

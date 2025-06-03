@@ -1,42 +1,42 @@
-import { useState } from 'react';
-import { Rnd } from 'react-rnd';
-import './ResizableImage.css';
+import { Rnd } from "react-rnd";
 
 const ResizableImage = ({ id, x, y, width, height, src, alt, selectedId, setSelectedId }) => {
-  const [position, setPosition] = useState({ x, y });
-  const [size, setSize] = useState({ width, height });
-  const [isResizing, setIsResizing] = useState(false);
-
   return (
     <Rnd
-      size={size}
-      position={position}
-      onDragStop={(e, d) => setPosition({ x: d.x, y: d.y })}
-      onResizeStart={() => setIsResizing(true)}
-      onResizeStop={(e, dir, ref, delta, pos) => {
-        setIsResizing(false);
-        setSize({ width: ref.offsetWidth, height: ref.offsetHeight });
-        setPosition(pos);
-      }}
+      default={{ x, y, width, height }}
       minWidth={50}
       minHeight={30}
-      className={`placeholder${selectedId === id ? ' selected' : ''}`}
-      onClick={() => setSelectedId(id)}
-      style={{ overflow: 'hidden' }}
+      lockAspectRatio={true}
+      enableResizing={{
+        bottomRight: true,
+        bottom: false,
+        bottomLeft: false,
+        left: true,
+        right: true,
+        top: false,
+        topLeft: false,
+        topRight: false,
+      }}
+      onClick={(e) => {
+        e.stopPropagation();
+        setSelectedId(id);
+      }}
+      style={{
+        border: selectedId === id ? "2px solid limegreen" : "none",
+        zIndex: selectedId === id ? 10 : 1,
+      }}
     >
-      <div className="rnd-container">
-        <img
-          src={src}
-          alt={alt}
-          draggable={false}
-          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-        />
-        {isResizing && (
-          <div className="resize-frame-overlay">
-            <div className="diagonal-line" />
-          </div>
-        )}
-      </div>
+      <img
+        src={src}
+        alt={alt}
+        draggable={false}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          pointerEvents: "none",
+        }}
+      />
     </Rnd>
   );
 };
