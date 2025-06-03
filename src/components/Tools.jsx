@@ -2,13 +2,13 @@ import './Tools.css'
 import Upload from './Upload'
 import Preview from './Preview'
 
-const Tools = () => {
+const Tools = ({ setBackImage, setTitleImage, setSignImage,   }) => {
     
     return (
         <>
         <div className="container">
-            <Upload />
-            <Preview />
+            <Upload setBackImage={ setBackImage } setTitleImage={ setTitleImage } setSignImage={ setSignImage }/>
+            {/* <Preview BackImage={ BackImage } TitleImage={ TitleImage } SignImage={ SignImage }/> */}
         </div>  
         </>
     );

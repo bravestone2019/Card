@@ -1,14 +1,45 @@
-import './Upload.css'
+import './Preview.css';
+import { useState } from 'react';
+import Canvas from './Canvas';
 import Submit from '../assets/submit.png';
 
-const Preview = () => {
-    return(
+const Preview = ({ backImage, titleImage, signImage }) => {
+    const [open, setOpen] = useState(false);
+
+    return (
         <>
-        <img
-                src={ Submit }
-                alt='upload'
+            <img
+                src={Submit}
+                alt='preview'
                 className='icon'
-              />
+                onClick={() => setOpen(true)}
+                style={{ cursor: 'pointer' }}
+            />
+            {open && (
+                <div className="preview-modal-overlay">
+                    <div className="preview-modal">
+                        <button className="close-btn" onClick={() => setOpen(false)}>×</button>
+                        <div className="preview-cards-row">
+                            {/* Render front and back cards side by side */}
+                            {/* <div className="preview-card">
+                                <Canvas
+                                    backImage={null}
+                                    titleImage={titleImage}
+                                    signImage={signImage}
+                                />
+                            </div> */}
+                            {/* <div className="preview-card">
+                                <Canvas
+                                    backImage={backImage}
+                                    titleImage={null}
+                                    signImage={null}
+                                />
+                            </div> */}
+                        </div>
+                        <button className="download-btn">Download</button>
+                    </div>
+                </div>
+            )}
         </>
     );
 };

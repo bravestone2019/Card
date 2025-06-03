@@ -3,7 +3,7 @@ import Files from './Files';
 import { useRef, useState } from 'react';
 import FileIcon from '../assets/file.png';
 
-const Upload = () => {
+const Upload = ({ setBackImage, setTitleImage, setSignImage }) => {
   const fileInputRef = useRef(null);
   const [files, setFiles] = useState([]);
 
@@ -16,14 +16,44 @@ const Upload = () => {
   const handleFileChange = ( event ) => {
     const selectedFiles = Array.from( event.target.files );
     setFiles( prev => [...prev, ...selectedFiles] );
+
+    selectedFiles.forEach((file) => {
+      if (file.name.toLowerCase().includes('back')) {
+        const url = URL.createObjectURL(file);
+        setBackImage(url);
+      };
+      if (file.name.toLowerCase().includes('title')) {
+        const url = URL.createObjectURL(file);
+        setTitleImage(url);
+      };
+      if (file.name.toLowerCase().includes('sign')) {
+        const url = URL.createObjectURL(file);
+        setSignImage(url);
+      };
+    });
   };
 
-  const handleRemove = (index) => {
-    setFiles( prev => prev.filter((_, i) => i !== index) );
+  const handleRemove = ( index ) => {
+     const updatedFiles = [...files];
+    const [removed] = updatedFiles.splice(index, 1);
+    setFiles(updatedFiles);
+
+    if (removed.name.toLowerCase().includes('back')) {
+      setBackImage(null);
+    };
+    if (removed.name.toLowerCase().includes('title')) {
+      setTitleImage(null);
+    };
+    if (removed.name.toLowerCase().includes('sign')) {
+      setSignImage(null);
+    };
   };
 
   const handleClear = () => {
     setFiles([]);
+    setBackImage(null);
+    setTitleImage(null);
+    setSignImage(null);
   };
 
   return (

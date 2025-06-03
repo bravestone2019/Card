@@ -1,0 +1,30 @@
+/* Ensures the overlay and image sit correctly */
+.rnd-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Blue border and diagonal line for Figma-style effect */
+.resize-frame-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid #1e90ff;
+  pointer-events: none;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.diagonal-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150%;
+  height: 2px;
+  background: #1e90ff;
+  transform: rotate(45deg);
+  transform-origin: 0 0;
+}
