@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Rnd } from "react-rnd";
 import ResizableImage from "./Resize";
 
-const Canvas = ({ backImage, titleImage, signImage }) => {
+const Canvas = ({ backImage, titleImage, signImage, photoImage, studentData }) => {
   const [placeholders] = useState([
     { id: 1, x: 25, y: 20, width: 490, height: 50 },
     { id: 2, x: 40, y: 90, width: 125, height: 150 },
@@ -42,6 +42,57 @@ const Canvas = ({ backImage, titleImage, signImage }) => {
                 setSelectedId={setSelectedId}
               />
             );
+          }
+
+          if (id === 2 && photoImage) {
+            return (
+              <Rnd
+                key={id}
+                default={{ x, y, width, height }}
+                minWidth={50}
+                minHeight={30}
+                style={{ overflow: "hidden" }}
+              >
+                <img
+                  src={photoImage}
+                  alt="Photo"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </Rnd>
+            );
+          }
+
+          if (id === 3) {
+            if (studentData && (studentData["Name"] || studentData["Roll.No"])) {
+              return (
+                <Rnd
+                  key={id}
+                  default={{ x, y, width, height }}
+                  style={{ background: "#fff", padding: 8, overflow: "hidden" }}
+                >
+                  <div
+                    className="student-data-box"
+                    style={{ width: "100%", height: "100%" }}
+                  >
+                    <div><b style={{ color: "red" }}>Name:</b> {studentData["Name"]}</div>
+                    <div><b style={{ color: "red" }}>Roll No:</b> {studentData["Roll.No"]}</div>
+                    {studentData["Class"] && <div><b style={{ color: "red" }}>Class:</b> {studentData["Class"]}</div>}
+                    {studentData["Phone"] && <div><b style={{ color: "red" }}>Phone:</b> {studentData["Phone"]}</div>}
+                    {studentData["Address"] && <div><b style={{ color: "red" }}>Address:</b> {studentData["Address"]}</div>}
+                  </div>
+                </Rnd>
+              );
+            } else if (studentData) {
+              return (
+                <Rnd
+                  key={id}
+                  default={{ x, y, width, height }}
+                  style={{ overflow: "auto", background: "#fff", padding: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <div style={{ color: '#FF0000' }}>No student data found</div>
+                </Rnd>
+              );
+            }
           }
 
           if (id === 5 && signImage) {

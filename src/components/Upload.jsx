@@ -2,8 +2,9 @@ import './upload.css';
 import Files from './Files';
 import { useRef, useState } from 'react';
 import FileIcon from '../assets/file.png';
+import * as XLSX from 'xlsx';
 
-const Upload = ({ setBackImage, setTitleImage, setSignImage }) => {
+const Upload = ({ setBackImage, setTitleImage, setSignImage, setPhotoImage, setExcelData }) => {
   const fileInputRef = useRef(null);
   const [files, setFiles] = useState([]);
 
@@ -30,6 +31,24 @@ const Upload = ({ setBackImage, setTitleImage, setSignImage }) => {
         const url = URL.createObjectURL(file);
         setSignImage(url);
       };
+      // If filename is all digits (e.g., 6608.jpg), treat as photoImage
+      if (/^\d+\./.test(file.name)) {
+        const url = URL.createObjectURL(file);
+        setPhotoImage(url, file.name);
+      }
+      // Handle Excel file
+      if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const data = new Uint8Array(evt.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const json = XLSX.utils.sheet_to_json(worksheet);
+          setExcelData(json);
+        };
+        reader.readAsArrayBuffer(file);
+      }
     });
   };
 
@@ -64,11 +83,12 @@ const Upload = ({ setBackImage, setTitleImage, setSignImage }) => {
         className='icon'
         onClick={ handleIconClick }
       />
-       <input
+      <input
         type='file'
         ref={ fileInputRef } 
         onChange={ handleFileChange }
         multiple
+        accept='.jpg,.jpeg,.png,.xlsx,.xls'
         style={{ display: 'none' }} 
       />
 
