@@ -52,7 +52,7 @@ const Files = ({ files, onRemove, onClear }) => {
                         </div>
                     </div>
                     {!isMinimized && (
-                        <div className={`file-list ${files.length > 2 ? 'scrollable' : ''}`}>
+                        <div className={`file-list${files.length > 3 ? ' scrollable' : ''}`}>
                             {files.map(( file, index ) => (
                                 <div className="file-item" key={ index }>
                                     <img src={ getFileIcon( file ) } alt="file" className="file-thumb" />

@@ -37,14 +37,23 @@ const Upload = ({ setBackImage, setTitleImage, setSignImage, setPhotoImage, setE
         setPhotoImage(url, file.name);
       }
       // Handle Excel file
-      if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+      if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls') || file.name.endsWith('.csv')) {
         const reader = new FileReader();
         reader.onload = (evt) => {
           const data = new Uint8Array(evt.target.result);
           const workbook = XLSX.read(data, { type: 'array' });
           const sheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[sheetName];
-          const json = XLSX.utils.sheet_to_json(worksheet);
+          const jsonRaw = XLSX.utils.sheet_to_json(worksheet);
+          // Normalize keys: trim whitespace from all keys in each row
+          const json = jsonRaw.map(row => {
+            const newRow = {};
+            Object.keys(row).forEach(key => {
+              // Also trim string values to avoid extra spaces
+              newRow[key.trim()] = typeof row[key] === 'string' ? row[key].trim() : row[key];
+            });
+            return newRow;
+          });
           setExcelData(json);
         };
         reader.readAsArrayBuffer(file);

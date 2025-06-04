@@ -2,6 +2,7 @@ import "./canvas.css";
 import { useState } from "react";
 import { Rnd } from "react-rnd";
 import ResizableImage from "./Resize";
+import BarcodeCard from "./barcode"; // Import the BarcodeCard component
 
 const Canvas = ({ backImage, titleImage, signImage, photoImage, studentData }) => {
   const [placeholders] = useState([
@@ -93,6 +94,24 @@ const Canvas = ({ backImage, titleImage, signImage, photoImage, studentData }) =
                 </Rnd>
               );
             }
+          }
+
+          if (id === 4 && studentData && studentData["Roll.No"]) {
+            return (
+              <Rnd
+                key={id}
+                default={{ x, y, width, height }}
+                style={{ background: "#fff", padding: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                <BarcodeCard item={{
+                  rollNo: studentData["Roll.No"],
+                  name: studentData["Name"],
+                  class: studentData["Class"],
+                  phone: studentData["Phone"],
+                  address: studentData["Address"]
+                }} />
+              </Rnd>
+            );
           }
 
           if (id === 5 && signImage) {
