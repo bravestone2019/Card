@@ -16,7 +16,7 @@ const Upload = ({ setBackImage, setTitleImage, setSignImage, setPhotoImage, setE
   /* Remove a file from the list */
   const handleFileChange = ( event ) => {
     const selectedFiles = Array.from( event.target.files );
-    setFiles( prev => [...prev, ...selectedFiles] );
+    setFiles( prev => [...selectedFiles, ...prev ]); // Add new files to the end of the list (oldest first)
 
     selectedFiles.forEach((file) => {
       if (file.name.toLowerCase().includes('back')) {
@@ -75,6 +75,14 @@ const Upload = ({ setBackImage, setTitleImage, setSignImage, setPhotoImage, setE
     if (removed.name.toLowerCase().includes('sign')) {
       setSignImage(null);
     };
+    // Remove photo image and reset filename if photo
+    if (/^\d+\./.test(removed.name)) {
+      setPhotoImage(null, "");
+    }
+    // Remove excel data if excel file
+    if (removed.name.endsWith('.xlsx') || removed.name.endsWith('.xls') || removed.name.endsWith('.csv')) {
+      setExcelData([]);
+    }
   };
 
   const handleClear = () => {
@@ -82,6 +90,8 @@ const Upload = ({ setBackImage, setTitleImage, setSignImage, setPhotoImage, setE
     setBackImage(null);
     setTitleImage(null);
     setSignImage(null);
+    setPhotoImage(null, "");
+    setExcelData([]);
   };
 
   return (

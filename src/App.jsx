@@ -1,5 +1,5 @@
 import './App.css'
-import Preview from './components/Preview'
+// import Preview from './components/Preview'
 import { useState } from 'react';
 import Tool from './components/Tools';
 import Canvas from './components/Canvas';
@@ -35,7 +35,7 @@ function App() {
   return (
     <>
       <Canvas backImage={backImage} titleImage={titleImage} signImage={signImage} photoImage={photoImage} studentData={studentData} />
-      <Tool setBackImage={setBackImage} setTitleImage={setTitleImage} setSignImage={setSignImage} setPhotoImage={handleSetPhotoImage} setExcelData={setExcelData} />
+      <Tool setBackImage={setBackImage} setTitleImage={setTitleImage} setSignImage={setSignImage} setPhotoImage={handleSetPhotoImage} setExcelData={setExcelData} backImage={backImage} titleImage={titleImage} signImage={signImage} photoImage={photoImage} studentData={studentData} />
     </>
   );
 };
